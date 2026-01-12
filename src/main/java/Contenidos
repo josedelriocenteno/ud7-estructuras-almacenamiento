@@ -1,0 +1,66 @@
+Tema7_Estructuras_De_Almacenamiento/
+│
+├── 1_Introduccion_Estructuras/
+│   ├── QueSonEstructuras.md                 // Qué es una estructura, memoria estática vs dinámica
+│   ├── TiposDeEstructuras.md                // Lineales, no lineales, homogéneas, heterogéneas
+│   └── Complejidad_BigO_Basica.md           // Explicación MUY simple de coste temporal/espacial (DAM)
+│
+├── 2_Arrays/
+│   ├── ArrayBasico.java                     // Crear, recorrer, asignar valores, ejemplo básico DAM
+│   ├── ArrayBidimensional.java              // Matrices: recorrido por filas y columnas
+│   └── OperacionesArray.java                // Buscar, contar, min/max, ordenar simple
+│
+├── 3_Listas/
+│   ├── ArrayList_Basico.java                // add(), get(), remove(), size(), contains()
+│   ├── ArrayList_Iteracion.java             // Recorrido con for-each, iterator
+│   ├── LinkedList_Basico.java               // Diferencias reales con ArrayList
+│   └── Comparacion_ArrayList_LinkedList.md  // Cuándo usar cada una
+│
+├── 4_Pilas_Stacks/
+│   ├── Stack_Basico.java                    // push(), pop(), peek(), empty()
+│   ├── UsoStack.java                        // Ejemplos: invertir string, validar paréntesis
+│   └── Stack_ImplementacionPropia.java      // Implementar pila con array manualmente
+│
+├── 5_Colas_Queues/
+│   ├── Queue_Basico.java                    // offer(), poll(), peek(), isEmpty()
+│   ├── Deque_Basico.java                    // Doble extremo: addFirst, addLast, pollFirst, pollLast
+│   └── ColaCircular_Implementacion.java     // Cola circular implementada a mano (DAM típico)
+│
+├── 6_Mapas_Diccionarios/
+│   ├── HashMap_Basico.java                  // put(), get(), remove(), keySet(), values(), entrySet()
+│   ├── IterarHashMap.java                   // Recorrer claves y entradas correctamente
+│   └── Comparacion_Mapas.md                 // HashMap vs TreeMap vs LinkedHashMap
+│
+├── 7_Sets_Conjuntos/
+│   ├── HashSet_Basico.java                  // add(), remove(), contains(), size()
+│   ├── TreeSet_Ordenado.java                // Orden natural automático
+│   └── LinkedHashSet_Basico.java            // Conserva el orden de inserción
+│
+├── 8_Listas_Enlazadas_Manual/
+│   ├── NodoSimple.java                      // Clase Nodo explicada paso a paso
+│   ├── ListaEnlazadaSimple.java             // Insertar, buscar, eliminar, recorrer (simple)
+│   ├── ListaEnlazadaDoble.java              // Nodos con enlaces doble
+│   └── VentajasDesventajas_Listas.md        // Dónde se usan y para qué no sirven
+│
+├── 9_Arboles_Binarios/
+│   ├── NodoArbol.java                       // Nodo con left/right explicado
+│   ├── ArbolBinario_Insertar_Buscar.java    // Insertar y buscar (árbol binario simple)
+│   └── RecorridosArbol.java                 // in-order, pre-order, post-order (very DAM)
+│
+├── 10_Grafos_Introduccion/
+│   ├── QueEsUnGrafo.md                      // Explicación conceptual (nodos/aristas)
+│   ├── Grafo_MatrizAdyacencia.java          // Representación con matriz
+│   └── Grafo_ListaAdyacencia.java           // Representación con listas
+│
+├── 11_TablasHash/
+│   ├── FuncionHash_Explicacion.md           // Qué es hashing y para qué sirve
+│   ├── Colisiones_Chaining.md               // Manejo de colisiones con listas (DAM-friendly)
+│   └── TablaHash_ImplementacionSimple.java  // Implementación básica de hash table
+│
+├── 12_ResumenColeccionesJava/
+│   ├── ResumenColecciones.md                // Tabla resumen: List, Set, Map, Queue, Stack
+│   └── TablaComparativa.pdf                 // Ventajas, desventajas, usos típicos
+│
+└── 13_Resumen_Y_Ejercicios/
+    ├── ResumenTema7.md                      // Resumen final para estudiar en 10 minutos
+    └── EjerciciosTema7.java                 // Array, List, Stack, Queue, Map, Set, Árbol (DAM style)
