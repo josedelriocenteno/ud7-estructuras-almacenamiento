@@ -124,8 +124,7 @@ public class Persona {
 
     public static int buscarDNI_3(String [] array, String dato){
         Arrays.sort(array);
-        int posicion = Arrays.binarySearch(array, dato);
-        return posicion;
+        return Arrays.binarySearch(array, dato);
     }
     
     @Override
