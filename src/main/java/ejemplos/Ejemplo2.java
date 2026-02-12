@@ -29,7 +29,7 @@ public class Ejemplo2 {
         
         String[] dnis = {"1111111A", "1231321321Z", "21321321321B" , "32131321433X", "848383927590J"};
        
-        
+        System.out.println(Persona.buscarDNI_3(dnis, "1111111A"));
         
     }
 }
