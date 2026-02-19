@@ -21,6 +21,10 @@
 
     <!-- Dependencias -->
     <dependencies>
-        <!-- Añade dependencias según necesites -->
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.2</version>
+        </dependency>
     </dependencies>
 </project>
