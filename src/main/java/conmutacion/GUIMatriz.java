@@ -4,19 +4,73 @@
  */
 package conmutacion;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.Random;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author delcenjo
  */
 public class GUIMatriz extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GUIMatriz
-     */
-    public GUIMatriz() {
+    private Integer[][] matriz;
+    private int filas;
+    private int columnas;
+    private DefaultTableModel modeloTabla;
+    private JTable tabla;
+    
+    public GUIMatriz(Integer[][] matriz) {
         initComponents();
+        
+        this.matriz = matriz;
+        this.filas = matriz.length;
+        this.columnas = matriz[0].length;
+        
+        llenarMatriz();
+        modeloTabla = new DefaultTableModel(matriz, new Object[columnas]);
+        tabla = new JTable(modeloTabla);  
+        
+        imprimirMatriz();
+        
+        setFrame();
     }
 
+    private void setFrame(){
+        String titulo = String.format("Matriz %d X %d", filas, columnas);
+        this.setTitle(titulo);
+        tabla.getTableHeader().setVisible(false);
+        JScrollPane scroll = new JScrollPane(tabla);
+        this.getContentPane().add(scroll, BorderLayout.CENTER);
+        this.setPreferredSize(new Dimension(columnas*130, filas*50));
+        this.pack();    // Ajusta el tamaño de la ventana a su contenido
+        this.setLocationRelativeTo(null);   // Ventana al centro
+        this.setVisible(true);  // Ventana visible
+        
+    }
+    
+    private void llenarMatriz(){
+        Random rd = new Random();
+        for(int i = 0; i < filas; i++){
+            for(int j = 0; j < columnas; j++){
+                matriz[i][j] = rd.nextInt(1, 101);
+            }
+        }
+    }
+    
+    private void imprimirMatriz(){
+        for(int i = 0; i < filas; i++){
+            for(int j = 0; j < columnas; j++){
+                System.out.print(matriz[i][j] + " ");
+            }
+            System.out.println();
+        }        
+        System.out.println(this.tabla.getColumnCount());
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,17 +81,6 @@ public class GUIMatriz extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

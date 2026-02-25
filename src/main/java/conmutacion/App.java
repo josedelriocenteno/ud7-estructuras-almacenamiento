@@ -15,16 +15,24 @@ public class App {
     public static final int MAX = 10;
     public static final int MIN = 2;
     
-    private static Integer[] valores(){
+    private static Integer[] getValores(){
         Integer[] array = new Integer[MAX - MIN + 1];
+        int valor = MIN;
             for(int i = 0; i < array.length; i++){
-                array[i] = MIN + i;
+                array[i] = valor + i;
             }
         return array;
     }
     public static void main(String[] args) {
-        Integer[] valores = valores();
-        JOptionPane.showInputDialog(null, "Num. filas", "Dimension matriz",
+        Integer[] valores = getValores();
+        Integer filas = (Integer) JOptionPane.showInputDialog(null, "Num. filas", "Dimension matriz",
                 JOptionPane.PLAIN_MESSAGE, null, valores, valores[0]);
+        if(filas == null) return;
+        Integer columnas = (Integer) JOptionPane.showInputDialog(null, "Num. filas", "Dimension matriz",
+                JOptionPane.PLAIN_MESSAGE, null, valores, valores[0]);
+        if(columnas == null) return;
+        
+        GUIMatriz gui = new GUIMatriz(new Integer[filas][columnas]);
+        
     }
 }
