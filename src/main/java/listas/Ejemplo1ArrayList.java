@@ -144,19 +144,19 @@ public class Ejemplo1ArrayList extends javax.swing.JFrame {
         return con;
     }
     
-    private ArrayList<Integer> nombresInitInicial(){
-        ArrayList <Integer> lista = new ArrayList<>();
-        String inicials = JOptionPane.showInputDialog(this, "Introduce la inial de los nombre a buscar: ");
-        char inicial = inicials.charAt(0);
-        int contador = 0;
-        for(String nombre : listaNombres){
-            contador ++;
-            if(nombre.charAt(0) == inicial){
-                System.out.println(nombre);
-                lista.add(contador);
-            }
-        }
-    }
+//    private ArrayList<Integer> nombresInitInicial(){
+//        ArrayList <Integer> lista = new ArrayList<>();
+//        String inicials = JOptionPane.showInputDialog(this, "Introduce la inial de los nombre a buscar: ");
+//        char inicial = inicials.charAt(0);
+//        int contador = 0;
+//        for(String nombre : listaNombres){
+//            contador ++;
+//            if(nombre.charAt(0) == inicial){
+//                System.out.println(nombre);
+//                lista.add(contador);
+//            }
+//        }
+//    }
     
     /**
      * @param args the command line arguments
