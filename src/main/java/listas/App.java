@@ -6,6 +6,7 @@ package listas;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -24,7 +25,7 @@ public class App {
     
     public static void crearAlumnos(){
         listaAlumnos.add(new Alumno("12345678F", 25, 3.8, "Juan", "Fernandez"));
-        listaAlumnos.add(new Alumno("11111111A", 39, 5.8, "Victor", "Cap"));
+        listaAlumnos.add(new Alumno("11111111A", 39, 5.8, "Juan", "Cap"));
         listaAlumnos.add(new Alumno("22222222B", 19, 8.4, "Lucia", "Rivera"));
     }
     
@@ -51,17 +52,49 @@ public class App {
         mostrarAlumnos();
     }
     
+    public static void ordenarAlumnosEdad(){
+        Collections.sort(listaAlumnos, Comparator.comparing(Alumno::getEdad).reversed());
+        mostrarAlumnos();
+    }
+    
+    public static void ordenarAlumnosNota(){
+        Collections.sort(listaAlumnos, Comparator.comparing(Alumno::getNota).reversed());
+        mostrarAlumnos();
+    }
+    
+    public static void ordenarAlumnosApellidos(){
+        Collections.sort(listaAlumnos, Comparator.comparing(Alumno::getApellidos).thenComparing(Alumno::getNombre));
+        mostrarAlumnos();
+    }
+    
+    public static void ordenarAlumnosNombre(){
+        Collections.sort(listaAlumnos, Comparator.comparing(Alumno::getNombre).thenComparing(Alumno::getApellidos));
+        mostrarAlumnos();
+    }
+    
     public static void main(String[] args) {
         
         listaAlumnos = new ArrayList<>();
         crearAlumnos();
         mostrarAlumnos();
-        System.out.println("\nAlumnos aprobados:");
-        System.out.println(alumnosAprobados());
-        String dniBusqueda = "11111111A";
-        Alumno alumnoBuscado = buscarAlumno(dniBusqueda);
-        if (alumnoBuscado != null) System.out.println(alumnoBuscado);
-        else System.out.println("Alumnos no encontrados");
-        System.out.println("Alumnos ordenados por DNI");
+//        System.out.println("\nAlumnos aprobados:");
+//        System.out.println(alumnosAprobados());
+//        String dniBusqueda = "11111111A";
+//        Alumno alumnoBuscado = buscarAlumno(dniBusqueda);
+//        if (alumnoBuscado != null) System.out.println(alumnoBuscado);
+//        else System.out.println("Alumnos no encontrados");
+//        System.out.println("Alumnos ordenados por DNI");
+
+        System.out.println("\n\nAlumnos ordenados por edad:");
+        ordenarAlumnosEdad();
+        
+        System.out.println("\n\nAlumnos ordenados por nota:");
+        ordenarAlumnosNota();
+        
+        System.out.println("\n\nAlumnos ordenados por apellidos:");
+        ordenarAlumnosApellidos();
+        
+        System.out.println("\n\nAlumnos ordenados por nombre:");
+        ordenarAlumnosNombre();
     }   
 }
