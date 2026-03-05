@@ -1,0 +1,8 @@
+Registra manualmente 2 usuarios:
+
+pepe@gregoriofer.com
+juana@gregoriofer.com
+
+La aplicación deberá de permitir "votar" a cada usuario solo una vez.
+
+Además la votación de cada usuario quedará registrada con su fecha y hora.
