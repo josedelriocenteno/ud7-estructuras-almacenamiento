@@ -16,7 +16,8 @@ public class App {
     
     public static ArrayList<Alumno> listaAlumnos;
     
-    public static void mostrarAlumnos(){
+    public static void mostrarAlumnos()
+    {
             System.out.print("Alumnos de clase...");
             for(Alumno al : listaAlumnos){
                 System.out.printf("\n\t%s", al);
