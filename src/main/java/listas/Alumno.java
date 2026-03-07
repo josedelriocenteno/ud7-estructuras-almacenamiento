@@ -76,8 +76,8 @@ public class Alumno implements Comparable<Alumno>{
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.dni);
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.dni);
         return hash;
     }
 
@@ -97,8 +97,10 @@ public class Alumno implements Comparable<Alumno>{
     }
 
     @Override
-    public int compareTo(Alumno o) {
-        return this.getDni().compareTo(o.getDni());
+    public int compareTo(Alumno t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    
     
 }
