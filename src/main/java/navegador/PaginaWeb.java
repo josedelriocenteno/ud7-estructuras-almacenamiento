@@ -17,17 +17,11 @@ public class PaginaWeb {
     private String URL;
     private String titulo;
     private LocalDateTime fechaVisita;
-    private static int contador;
 
     public PaginaWeb(String URL, String titulo) {
         this.URL = URL;
         this.titulo = titulo;
         this.fechaVisita = LocalDateTime.now();
-        contador++;
-    }
-
-    public static int getContador() {
-        return contador;
     }
     
     public String getURL() {

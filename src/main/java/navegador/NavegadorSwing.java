@@ -15,39 +15,86 @@ import javax.swing.JOptionPane;
  */
 public class NavegadorSwing extends javax.swing.JFrame {
 
-    private static LinkedList<PaginaWeb> paginas;
+    private static final Pattern PATRON_URL = Pattern.compile("^(https?://)([\\w-]+\\.)+[\\w-]{2,}(:\\d+)"
+            + "?(/[^\\s]*)?$",Pattern.CASE_INSENSITIVE);
+
+    private LinkedList<PaginaWeb> historialLista;
+    private LinkedList<PaginaWeb> historialAtras;
+    private LinkedList<PaginaWeb> historialAdelante;
     private MiModeloLista modeloLista;
-    
+    private PaginaWeb paginaActual;
+
     public NavegadorSwing() {
         initComponents();
         setFrame();
     }
-
-    public void crearPaginasEjemplo(){
-        modeloLista.addFirst(new PaginaWeb("https://www.google.com", "Google"));
-        modeloLista.addFirst(new PaginaWeb("https://www.youtube.com", "YouTube"));
-        modeloLista.addFirst(new PaginaWeb("https://www.github.com", "GitHub"));
-        modeloLista.addFirst(new PaginaWeb("https://stackoverflow.com", "Stack Overflow"));
-        modeloLista.addFirst(new PaginaWeb("https://www.wikipedia.org", "Wikipedia"));
-        modeloLista.addFirst(new PaginaWeb("https://www.oracle.com", "Oracle"));
-        modeloLista.addFirst(new PaginaWeb("https://www.reddit.com", "Reddit"));
-        modeloLista.addFirst(new PaginaWeb("https://www.amazon.es", "Amazon"));
-        modeloLista.addFirst(new PaginaWeb("https://www.marca.com", "Marca"));
-        modeloLista.addFirst(new PaginaWeb("https://campusvirtual.universidad.es", "Campus Virtual"));
-        String mensaje = "Se han creado por defecto 10 páginas web para las pruebas:\n";
-        for (PaginaWeb pagina : paginas) {
-            mensaje += "- " + pagina.getTitulo() + "\n";
-        }
-        JOptionPane.showMessageDialog(this, mensaje);
+    
+    public void setFrame() {
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        historialLista = new LinkedList<>();
+        historialAtras = new LinkedList<>();
+        historialAdelante = new LinkedList<>();
+        modeloLista = new MiModeloLista(historialLista);
+        jListHistorial.setModel(modeloLista);
+        paginaActual = new PaginaWeb("https://www.google.com", "Google");
+        modeloLista.addFirst(paginaActual);
+        actualizarCampos();
+        actualizarPanelInformacion();
     }
     
-    public void setFrame(){
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        paginas = new LinkedList<>();
-        this.modeloLista = new MiModeloLista(paginas);
-        this.jListHistorial.setModel(modeloLista);
-        this.setTitle("Navegador Swing 1ºDAM");
-        crearPaginasEjemplo();
+    private void visitarPagina() {
+        String url = jTextField1Url.getText().trim();
+        String titulo = jTextTitulo.getText().trim();
+        if (url.isEmpty() || !validarURL(url)) {
+            JOptionPane.showMessageDialog(this,"URL no válida","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (paginaActual != null) {
+            historialAtras.addFirst(paginaActual);
+        }
+        historialAdelante.clear();
+        paginaActual = new PaginaWeb(url, titulo);
+        modeloLista.addFirst(paginaActual);
+        actualizarCampos();
+        actualizarPanelInformacion();
+    }
+    
+    private void irAtras() {
+        if (historialAtras.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"No hay páginas anteriores");
+            return;
+        }
+        historialAdelante.addFirst(paginaActual);
+        paginaActual = historialAtras.removeFirst();
+        modeloLista.addFirst(paginaActual);
+        actualizarCampos();
+        actualizarPanelInformacion();
+    }
+    
+    private void irAdelante() {
+        if (historialAdelante.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"No hay páginas siguientes");
+            return;
+        }
+
+        historialAtras.addFirst(paginaActual);
+        paginaActual = historialAdelante.removeFirst();
+        modeloLista.addFirst(paginaActual);
+        actualizarCampos();
+        actualizarPanelInformacion();
+    }
+    
+    private void actualizarCampos() {
+        jTextField1Url.setText(paginaActual.getURL());
+        jTextTitulo.setText(paginaActual.getTitulo());
+    }
+    
+    private void actualizarPanelInformacion() {
+        jLabelAlfabeto.setText("Página actual: " + paginaActual.getTitulo());
+    }
+    
+    public static boolean validarURL(String url) {
+        return PATRON_URL.matcher(url).matches();
     }
     
     @SuppressWarnings("unchecked")
@@ -61,7 +108,7 @@ public class NavegadorSwing extends javax.swing.JFrame {
         jTextTitulo = new javax.swing.JTextField();
         jButtonVisitar = new javax.swing.JButton();
         jButtonAtras = new javax.swing.JButton();
-        jButtonAtras1 = new javax.swing.JButton();
+        jButtonAdelante = new javax.swing.JButton();
         panelHistorial = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListHistorial = new javax.swing.JList<>();
@@ -100,13 +147,13 @@ public class NavegadorSwing extends javax.swing.JFrame {
         });
         panelNavegacion.add(jButtonAtras);
 
-        jButtonAtras1.setText("Adelante");
-        jButtonAtras1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAdelante.setText("Adelante");
+        jButtonAdelante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAtras1ActionPerformed(evt);
+                jButtonAdelanteActionPerformed(evt);
             }
         });
-        panelNavegacion.add(jButtonAtras1);
+        panelNavegacion.add(jButtonAdelante);
 
         getContentPane().add(panelNavegacion, java.awt.BorderLayout.PAGE_START);
 
@@ -129,51 +176,24 @@ public class NavegadorSwing extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVisitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisitarActionPerformed
-        String url = jTextField1Url.getText();
-        if(validarURL(url)){
-            PaginaWeb pag = new PaginaWeb(url,jTextTitulo.getText());
-            modeloLista.addFirst(pag);
-        }else JOptionPane.showMessageDialog(this, "Debes de introducir una URL válida",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        jTextTitulo.setText("");
-        jTextField1Url.setText("");
+        visitarPagina();
     }//GEN-LAST:event_jButtonVisitarActionPerformed
 
     private void jButtonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtrasActionPerformed
-        String url = this.modeloLista.getElementAt(1).getURL();
-        String titulo = this.modeloLista.getElementAt(1).getTitulo();
-        this.modeloLista.addFirst(new PaginaWeb(url,titulo));
-        jTextTitulo.setText(titulo);
-        jTextField1Url.setText(url);
+        irAtras();
     }//GEN-LAST:event_jButtonAtrasActionPerformed
 
-    private void jButtonAtras1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtras1ActionPerformed
-        String url = this.modeloLista.getElementAt(0).getURL();
-        String titulo = this.modeloLista.getElementAt(0).getTitulo();
-        this.modeloLista.addFirst(new PaginaWeb(url,titulo));
-        jTextTitulo.setText(titulo);
-        jTextField1Url.setText(url);
-    }//GEN-LAST:event_jButtonAtras1ActionPerformed
-    
-    private static final Pattern PATRON_URL = Pattern.compile(
-        "^(https?://)" +
-        "([\\w-]+\\.)+[\\w-]{2,}" +
-        "(:\\d+)?" +
-        "(/[^\\s]*)?$",
-        Pattern.CASE_INSENSITIVE
-    );
+    private void jButtonAdelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdelanteActionPerformed
+        irAdelante();
+    }//GEN-LAST:event_jButtonAdelanteActionPerformed
 
-    public static boolean validarURL(String url) {
-        return PATRON_URL.matcher(url).matches();
-    }
-    
     public static void main(String args[]) {
         new NavegadorSwing().setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAdelante;
     private javax.swing.JButton jButtonAtras;
-    private javax.swing.JButton jButtonAtras1;
     private javax.swing.JButton jButtonVisitar;
     private javax.swing.JLabel jLabelAlfabeto;
     private javax.swing.JLabel jLabelTitulo;

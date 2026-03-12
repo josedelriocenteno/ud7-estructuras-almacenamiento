@@ -9,39 +9,36 @@ import javax.swing.AbstractListModel;
 
 /**
  *
- * @author macarena
+ * @author delcenjo
  */
 public class MiModeloLista extends AbstractListModel<PaginaWeb> {
 
-    private final LinkedList<PaginaWeb> cola;
+    private LinkedList<PaginaWeb> lista;
 
-    public MiModeloLista(LinkedList<PaginaWeb> cola) {
-        this.cola = cola;
+    public MiModeloLista(LinkedList<PaginaWeb> lista) {
+        this.lista = lista;
     }
-    
-    public void addFirst(PaginaWeb d) {
-        cola.add(0,d);
+
+    public void addFirst(PaginaWeb pagina) {
+        lista.addFirst(pagina);
         fireIntervalAdded(this, 0, 0);
     }
-    
-    public void add(PaginaWeb d) {
-        cola.add(d);
-        int index = cola.size() - 1;
-        fireIntervalAdded(this, index, index); //se notifica a la JList que se ha a?adido
-    }
 
-    public void removeFirst() {
-        cola.removeFirst();
-        fireIntervalRemoved(this, 0, 0); //se notifica a la JList que se ha eliminado
+    public void clear() {
+        int size = lista.size();
+        lista.clear();
+        if (size > 0) {
+            fireIntervalRemoved(this, 0, size - 1);
+        }
     }
 
     @Override
     public int getSize() {
-        return cola.size();
+        return lista.size();
     }
 
     @Override
     public PaginaWeb getElementAt(int index) {
-        return cola.get(index);
+        return lista.get(index);
     }
 }
